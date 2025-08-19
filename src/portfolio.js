@@ -57,7 +57,7 @@ const Header = () => {
     return (
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/50 backdrop-blur-lg' : 'bg-transparent'}`}>
             <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-                <a href="#hero" className="text-2xl font-bold text-gray-100">PK.</a>
+                <a href="#hero" className="text-2xl font-bold text-gray-100">NS.</a>
                 <div className="hidden md:flex space-x-8 text-lg">
                     {navLinks.map(link => (
                         <a key={link} href={`#${link.toLowerCase()}`} className="text-gray-300 hover:text-white transition duration-300">
@@ -75,16 +75,16 @@ const Hero = () => (
     <section id="hero" className="min-h-screen flex flex-col justify-center items-center text-center bg-black">
          <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{backgroundImage: "url('https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"}}></div>
         <div className="relative z-10">
-            <h1 className="text-6xl md:text-8xl font-bold text-white tracking-tight">Pravin Kumar</h1>
+            <h1 className="text-6xl md:text-8xl font-bold text-white tracking-tight">Narayanasamy</h1>
             <h2 className="text-4xl md:text-6xl font-medium text-gray-300 mt-4">iOS Developer</h2>
             <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-400">
                 Building scalable, user-centric mobile applications with a focus on clean architecture and intuitive UI/UX design.
             </p>
             <div className="mt-10 flex justify-center gap-4">
-                <a href="https://github.com/pravinpkme" target="_blank" rel="noopener noreferrer" className="px-8 py-3 text-lg font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition duration-300">
+                <a href="https://github.com/narayanasamy" target="_blank" rel="noopener noreferrer" className="px-8 py-3 text-lg font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition duration-300">
                     GitHub
                 </a>
-                <a href="https://www.linkedin.com/in/pravin-kuma-r" target="_blank" rel="noopener noreferrer" className="px-8 py-3 text-lg font-semibold text-white bg-gray-800/50 border border-gray-700 rounded-full hover:bg-gray-800 transition duration-300">
+                <a href="https://www.linkedin.com/in/narayanasamy" target="_blank" rel="noopener noreferrer" className="px-8 py-3 text-lg font-semibold text-white bg-gray-800/50 border border-gray-700 rounded-full hover:bg-gray-800 transition duration-300">
                     LinkedIn
                 </a>
             </div>
@@ -98,7 +98,7 @@ const About = () => (
         <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">About Me</h2>
             <p className="mt-6 text-xl text-gray-400 leading-8">
-                Hello! I'm Pravin, an iOS developer based in Bengaluru. My journey into mobile development started with a passion for creating intuitive and performant applications that solve real-world problems. With a strong foundation in Swift, UIKit, and modern iOS frameworks, I specialize in clean architecture, performance optimization, and creating delightful user experiences.
+                Hello! I'm Narayanasamy, an iOS developer based in Bengaluru. My journey into mobile development started with a passion for creating intuitive and performant applications that solve real-world problems. With a strong foundation in Swift, UIKit, and modern iOS frameworks, I specialize in clean architecture, performance optimization, and creating delightful user experiences.
             </p>
         </div>
     </AnimatedSection>
@@ -237,7 +237,7 @@ const Contact = () => (
             <p className="mt-6 text-xl text-gray-400 leading-8">
                 I'm currently open to new opportunities. My inbox is always open, whether you have a question or just want to say hi.
             </p>
-            <a href="mailto:pravin.pk.me@gmail.com" className="mt-10 inline-block px-10 py-4 text-xl font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition duration-300">
+            <a href="mailto:narayanasamy.dev@gmail.com" className="mt-10 inline-block px-10 py-4 text-xl font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition duration-300">
                 Say Hello
             </a>
         </div>
@@ -247,13 +247,13 @@ const Contact = () => (
 // Footer Component
 const Footer = () => (
     <footer className="py-8 text-center text-gray-500">
-        <p>Designed & Built by Pravin Kumar</p>
+        <p>Designed & Built by Narayanasamy</p>
     </footer>
 );
 
 
 // Main App Component
-export default function App() {
+export function App() {
     return (
         <div className="bg-black text-gray-200 font-sans">
             <Header />
