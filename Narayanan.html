@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narayanasamy  - iOS Developer</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font - Inter -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #E5E5E5;
+        }
+        .section-container {
+            background-color: #141414;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            padding: 2.5rem;
+        }
+        .section-title {
+            color: #E5E5E5;
+            border-left: 4px solid #E50914;
+            padding-left: 1rem;
+            margin-bottom: 2rem;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #141414;
+            padding: 2.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: #aaa;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #fff;
+            cursor: pointer;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #E50914;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .go-top-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #E50914;
+            color: #fff;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            cursor: pointer;
+            z-index: 50;
+        }
+        .go-top-btn:hover {
+            transform: scale(1.1);
+        }
+        .go-top-btn.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1549692520-acc66699042b?q=80&w=2940&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            z-index: 0;
+            padding: 0;
+            margin: 0;
+            border-radius: 0;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-200">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl space-y-12">
+
+        <!-- Hero Section -->
+        <header class="text-center pt-16 pb-12 fade-in hero-bg">
+            <div class="hero-content">
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-wide">Narayanasamy </h1>
+                <p class="text-xl md:text-2xl font-light mt-2 text-gray-400">iOS Developer</p>
+                <div class="mt-6 flex justify-center space-x-4 text-2xl">
+                    <a href="mailto:anarayanasamy12@gmail.com" class="px-4 py-2 bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://www.linkedin.com" target="_blank" class="px-4 py-2 bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-700 transition-colors">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com" target="_blank" class="px-4 py-2 bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-700 transition-colors">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Sections -->
+        <div class="space-y-12">
+            
+            <!-- About Me Section -->
+            <section id="summary" class="section-container fade-in">
+                <h2 class="text-2xl font-bold section-title">About Me</h2>
+                <p class="leading-relaxed text-gray-400">
+                    iOS Developer with 2+ years of experience in Swift and SwiftUI mobile app development. Delivered scalable cross-platform applications serving 400,000+ users worldwide. Specialized in real-time messaging, AI integration, performance optimization, and data persistence solutions.
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <button id="generate-email-btn" class="px-8 py-3 bg-red-600 text-white font-semibold rounded-full shadow-lg hover:bg-red-500 transition-colors">
+                        Generate an Email Draft
+                    </button>
+                </div>
+            </section>
+
+            <!-- Technical Skills Section -->
+            <section id="skills" class="section-container fade-in">
+                <h2 class="text-2xl font-bold section-title">Skills</h2>
+                <div id="skills-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Skill cards will be injected here by JS -->
+                </div>
+            </section>
+
+            <!-- Professional Experience Section -->
+            <section id="experience" class="section-container fade-in">
+                <h2 class="text-2xl font-bold section-title">Experience</h2>
+                <div id="experience-container" class="space-y-8">
+                    <!-- Experience items will be injected here by JS -->
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="section-container fade-in">
+                <h2 class="text-2xl font-bold section-title">Projects</h2>
+                <div id="projects-container" class="space-y-8">
+                    <!-- Project cards will be injected here by JS -->
+                </div>
+            </section>
+
+            
+
+            <!-- Contact & Collaboration Section -->
+            <section id="contact" class="section-container fade-in text-center">
+                <h2 class="text-2xl font-bold section-title inline-block">Contact & Collaboration</h2>
+                <p class="text-lg text-gray-400 mt-4 mb-6">
+                    Interested in a collaboration or have a project in mind? Let's connect and build something amazing together.
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="mailto:anarayanasamy12@gmail.com" class="px-8 py-3 bg-red-600 text-white font-semibold rounded-full shadow-lg hover:bg-red-500 transition-colors">
+                        <i class="fas fa-envelope mr-2"></i>Email Me
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="email-modal" class="modal">
+        <div class="modal-content text-gray-300">
+            <span class="close-button">&times;</span>
+            <h3 class="text-2xl font-semibold text-red-500 mb-4">Generate Personalized Email Draft</h3>
+            <p class="text-gray-400 mb-6">Enter a job title or role, and I'll generate an email draft highlighting your fit for the position based on your portfolio data.</p>
+            <input type="text" id="job-role-input" placeholder="e.g., Senior iOS Developer, Mobile Engineer" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 text-white mb-4 focus:outline-none focus:ring-2 focus:ring-red-600 transition-shadow">
+            <button id="generate-draft-btn" class="w-full px-4 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 transition-colors">Generate Draft</button>
+
+            <div id="loading-spinner" class="mt-6 flex justify-center hidden">
+                <div class="spinner"></div>
+            </div>
+
+            <div id="email-output" class="mt-6 p-4 bg-gray-800 rounded-lg border border-gray-700 whitespace-pre-wrap text-gray-300 hidden"></div>
+        </div>
+    </div>
+
+    <!-- Go to Top Button -->
+    <button id="go-top-btn" class="go-top-btn hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Data for the portfolio, structured for easy rendering
+        const portfolioData = {
+            professionalSummary: "iOS Developer with 2+ years of experience in Swift and SwiftUI mobile app development. Delivered scalable cross-platform applications serving 400,000+ users worldwide. Specialized in real-time messaging, AI integration, performance optimization, and data persistence solutions.",
+            skills: {
+                "Languages": ["Swift", "SwiftUI"],
+                "Frameworks": ["UIKit", "CoreData", "Realm", "Combine", "Alamofire"],
+                "Architecture": ["MVVM", "The Composable Architecture (TCA)"],
+                "Tools": ["Xcode", "Firebase", "Jira", "Git", "Version Control", "Cursor AI", "SweetPad Extension"],
+                "Development": ["Mobile App Development", "API", "REST APIs", "Agile", "Performance Optimization"]
+            },
+            experience: [
+                {
+                    title: "FREELANCER | iOS Developer",
+                    date: "July 2023 - Present",
+                    summary: "Developed multiple client applications, focusing on real-time features, AI integration, and optimized user experience.",
+                    projects: ["MeinsteinAi"]
+                },
+                {
+                    title: "iOS DEVELOPER | Fusion Innovative Limited",
+                    date: "February 2023 - June 2023",
+                    summary: "Contributed to key modules for food delivery apps, enhancing real-time tracking and collaborating on multiple client projects using Agile methodologies.",
+                    projects: ["Fustion Kitchen", "Chennai Dosa App", "Kolkata Restaurant App", "Karvins Londis App"]
+                },
+                {
+                    title: "JR. IOS DEVELOPER | Webandcrafts",
+                    date: "March 2022 - February 2023",
+                    summary: "Enhanced features for major mobile apps, including login and home screen development, and applied performance optimizations for large user bases.",
+                    projects: ["IKEA", "LULU"]
+                }
+            ],
+            projects: [
+                {
+                    name: "MeinsteinAi",
+                    description: "A real-time messaging application with AI-powered features. The app utilizes CoreData for offline storage and combines SwiftUI and TCA for a robust, scalable architecture. Implemented voice interaction and push notifications to enhance user engagement.",
+                    appStore: "https://apps.apple.com/app/meinsteinai"
+                },
+                {
+                    name: "Fustion Kitchen",
+                    description: "Developed and optimized the real-time order tracking module for a food delivery application. The feature uses Firebase for live data updates, providing users with accurate and up-to-the-minute status of their orders.",
+                    appStore: "https://apps.apple.com/app/fusion-kitchen"
+                },
+                {
+                    name: "IKEA",
+                    description: "Contributed to a major update for the IKEA mobile app, focusing on user authentication. Developed and refined the login and OTP (One-Time Password) screens, enhancing security and user experience for over 400,000 users worldwide.",
+                    appStore: "https://apps.apple.com/app/ikea"
+                },
+                {
+                    name: "LULU",
+                    description: "Built the home page for the Lulu Shopping app using the SwiftUI framework. The design was optimized for performance, ensuring a smooth and responsive experience for users, even with a large number of product listings.",
+                    appStore: "https://apps.apple.com/app/lulu-shopping"
+                }
+            ],
+        };
+
+        // --- LLM Integration Functions ---
+
+        async function generateEmailDraft() {
+            const jobRole = jobRoleInput.value.trim();
+            if (jobRole === "") {
+                emailOutput.innerText = "Please enter a job role.";
+                emailOutput.style.display = "block";
+                return;
+            }
+
+            loadingSpinner.classList.remove('hidden');
+            emailOutput.style.display = "none";
+            generateButton.disabled = true;
+
+            const summaryText = portfolioData.professionalSummary;
+            const skillsText = Object.entries(portfolioData.skills).map(([key, value]) => `${key}: ${value.join(', ')}`).join('. ');
+            const prompt = `You are a career assistant. Your task is to write a concise and professional email draft for an iOS developer applying for a new job.
+Based on the following resume summary and skills, generate a professional and concise email draft.
+The email should be from the perspective of the iOS developer.
+The email should highlight relevant skills and experience for the job role: ${jobRole}.
+Resume Summary: "${summaryText}"
+Technical Skills: "${skillsText}"
+Email Draft:`;
+
+            const payload = {
+                contents: [{ role: "user", parts: [{ text: prompt }] }],
+                generationConfig: {
+                    temperature: 0.7,
+                },
+            };
+
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            // Exponential backoff retry logic
+            const maxRetries = 5;
+            let currentRetry = 0;
+
+            while (currentRetry < maxRetries) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            emailOutput.innerText = result.candidates[0].content.parts[0].text;
+                        } else {
+                            emailOutput.innerText = "Sorry, I couldn't generate an email draft. Please try again with a different job role.";
+                        }
+                        emailOutput.style.display = "block";
+                        loadingSpinner.classList.add('hidden');
+                        generateButton.disabled = false;
+                        return;
+                    } else if (response.status === 429) {
+                        const delay = Math.pow(2, currentRetry) * 1000;
+                        console.warn(`API rate limit exceeded. Retrying in ${delay}ms...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        currentRetry++;
+                    } else {
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+                } catch (error) {
+                    console.error("Error generating email:", error);
+                    emailOutput.innerText = "An error occurred while generating the draft. Please check the console.";
+                    emailOutput.style.display = "block";
+                    loadingSpinner.classList.add('hidden');
+                    generateButton.disabled = false;
+                    return;
+                }
+            }
+            emailOutput.innerText = "Failed to generate email after multiple retries. Please try again later.";
+            emailOutput.style.display = "block";
+            loadingSpinner.classList.add('hidden');
+            generateButton.disabled = false;
+        }
+
+        // --- UI & Event Handling ---
+
+        const modal = document.getElementById('email-modal');
+        const openButton = document.getElementById('generate-email-btn');
+        const closeButton = document.querySelector('.close-button');
+        const generateButton = document.getElementById('generate-draft-btn');
+        const jobRoleInput = document.getElementById('job-role-input');
+        const emailOutput = document.getElementById('email-output');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const goTopBtn = document.getElementById('go-top-btn');
+
+        openButton.onclick = function() {
+            modal.style.display = "flex";
+            emailOutput.style.display = "none";
+            jobRoleInput.value = "";
+        };
+
+        closeButton.onclick = function() {
+            modal.style.display = "none";
+        };
+
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        generateButton.onclick = generateEmailDraft;
+
+        // Go to top button functionality
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                goTopBtn.classList.remove('hidden');
+            } else {
+                goTopBtn.classList.add('hidden');
+            }
+        };
+
+        goTopBtn.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // --- Portfolio Rendering Functions ---
+        
+        // Function to create a skill card element
+        function createSkillCard(title, skills) {
+            const card = document.createElement('div');
+            card.className = 'bg-gray-900 p-6 rounded-lg shadow-inner shadow-gray-700 hover:shadow-xl transition-shadow';
+            card.innerHTML = `
+                <h3 class="text-lg font-semibold text-red-500 mb-2">${title}</h3>
+                <div class="flex flex-wrap gap-2">
+                    ${skills.map(skill => `<span class="bg-gray-800 text-gray-400 text-xs font-medium px-3 py-1 rounded-full border border-gray-700">${skill}</span>`).join('')}
+                </div>
+            `;
+            return card;
+        }
+
+        // Function to create an experience item element
+        function createExperienceItem(exp) {
+            const item = document.createElement('div');
+            item.className = 'bg-gray-900 p-6 rounded-lg shadow-inner shadow-gray-700 hover:shadow-xl transition-shadow cursor-pointer';
+
+            const header = document.createElement('div');
+            header.className = 'flex flex-col sm:flex-row sm:items-center justify-between';
+            header.innerHTML = `
+                <h3 class="text-xl font-semibold text-gray-200">${exp.title}</h3>
+                <span class="text-sm text-gray-500 mt-1 sm:mt-0">${exp.date}</span>
+            `;
+
+            const content = document.createElement('div');
+            content.className = 'mt-4 space-y-4 hidden text-gray-400';
+            
+            let contentHTML = `<p>${exp.summary}</p>`;
+            if (exp.projects && exp.projects.length > 0) {
+                const projectList = exp.projects.map(proj => `<li class="ml-4 list-disc">${proj}</li>`).join('');
+                contentHTML += `<ul class="mt-2 text-gray-500"><strong>Projects:</strong> ${projectList}</ul>`;
+            }
+            content.innerHTML = contentHTML;
+            
+            item.appendChild(header);
+            item.appendChild(content);
+
+            // Toggle project details on click
+            item.addEventListener('click', () => {
+                content.classList.toggle('hidden');
+            });
+
+            return item;
+        }
+
+        // Function to create a project item element
+        function createProjectItem(proj) {
+            const item = document.createElement('div');
+            item.className = 'bg-gray-900 p-6 rounded-lg shadow-inner shadow-gray-700 hover:shadow-xl transition-shadow';
+            
+            const header = document.createElement('div');
+            header.className = 'flex justify-between items-start';
+            header.innerHTML = `
+                <h3 class="text-xl font-semibold text-gray-200">${proj.name}</h3>
+                ${proj.appStore ? `<a href="${proj.appStore}" target="_blank" class="text-red-500 hover:underline"><i class="fab fa-app-store"></i> App Store</a>` : ''}
+            `;
+            
+            const content = document.createElement('div');
+            content.className = 'mt-4 space-y-4 text-gray-400';
+            
+            let descriptionHTML = `<p>${proj.description}</p>`;
+            
+            content.innerHTML = descriptionHTML;
+            
+            item.appendChild(header);
+            item.appendChild(content);
+            
+            return item;
+        }
+
+        // Function to create an education item element
+        function createEducationItem(edu) {
+            const item = document.createElement('div');
+            item.className = 'flex flex-col sm:flex-row justify-between items-start bg-gray-900 p-6 rounded-lg shadow-inner shadow-gray-700';
+            item.innerHTML = `
+                <div>
+                    <h3 class="text-lg font-medium text-gray-200">${edu.degree}</h3>
+                    <p class="text-gray-400">${edu.institution}</p>
+                </div>
+                <span class="text-sm text-gray-500 mt-2 sm:mt-0 sm:self-center">${edu.year}</span>
+            `;
+            return item;
+        }
+
+        // Function to create a certification item element
+        function createCertificationItem(cert) {
+            const item = document.createElement('div');
+            item.className = 'flex items-center bg-gray-900 p-4 rounded-lg shadow-inner shadow-gray-700';
+            item.innerHTML = `
+                <i class="fas fa-certificate text-red-500 mr-4 text-xl"></i>
+                <p class="text-gray-400">${cert}</p>
+            `;
+            return item;
+        }
+
+        // Function to render all sections
+        function renderPortfolio() {
+            // Render Skills
+            const skillsContainer = document.getElementById('skills-container');
+            if (skillsContainer) {
+                for (const category in portfolioData.skills) {
+                    skillsContainer.appendChild(createSkillCard(category, portfolioData.skills[category]));
+                }
+            }
+
+            // Render Experience
+            const experienceContainer = document.getElementById('experience-container');
+            if (experienceContainer) {
+                portfolioData.experience.forEach(exp => {
+                    experienceContainer.appendChild(createExperienceItem(exp));
+                });
+            }
+
+            // Render Projects
+            const projectsContainer = document.getElementById('projects-container');
+            if (projectsContainer) {
+                portfolioData.projects.forEach(proj => {
+                    projectsContainer.appendChild(createProjectItem(proj));
+                });
+            }
+
+            // Render Education
+            const educationContainer = document.getElementById('education-container');
+            if (educationContainer) {
+                portfolioData.education.forEach(edu => {
+                    educationContainer.appendChild(createEducationItem(edu));
+                });
+            }
+
+            // Render Certifications
+            const certificationsContainer = document.getElementById('certifications-container');
+            if (certificationsContainer) {
+                portfolioData.certifications.forEach(cert => {
+                    certificationsContainer.appendChild(createCertificationItem(cert));
+                });
+            }
+        }
+
+        // Intersection Observer for fade-in animations
+        const fadeInSections = document.querySelectorAll('.fade-in');
+        const observerOptions = {
+            root: null,
+            threshold: 0.1,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        fadeInSections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Initial render on window load
+        window.onload = renderPortfolio;
+    </script>
+
+</body>
+</html>
