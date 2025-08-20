@@ -1,5 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Mail, Linkedin, Github, ArrowUp, Apple } from 'lucide-react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import { ArrowUp } from 'lucide-react';
+
+const HeroSection = lazy(() => import('./sections/HeroSection'));
+const AboutMeSection = lazy(() => import('./sections/AboutMeSection'));
+const SkillsSection = lazy(() => import('./sections/SkillsSection'));
+const ExperienceSection = lazy(() => import('./sections/ExperienceSection'));
+const ProjectsSection = lazy(() => import('./sections/ProjectsSection'));
+const ContactSection = lazy(() => import('./sections/ContactSection'));
+const EmailModal = lazy(() => import('./sections/EmailModal'));
 
 // The main App component containing all portfolio sections and logic.
 export default function App() {
@@ -152,178 +160,29 @@ export default function App() {
         }
     };
 
-    // --- Reusable JSX Components ---
-
-    const HeroSection = () => (
-        <header
-            className="text-center pt-16 pb-12 fade-in bg-gradient-to-br from-gray-900 via-black to-gray-800 relative z-0 rounded-xl">
-            <div className="relative z-20">
-                <h1 className="text-4xl md:text-6xl font-extrabold tracking-wide">Narayanasamy</h1>
-                <p className="text-xl md:text-2xl font-light mt-2 text-gray-400">iOS Developer</p>
-                <div className="mt-6 flex justify-center space-x-4 text-2xl">
-                    <a href="mailto:anarayanasamy12@gmail.com" className="px-4 py-2 bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-700 transition-colors" aria-label="Email Narayanasamy">
-                        <Mail size={24} />
-                    </a>
-                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-700 transition-colors" aria-label="LinkedIn profile">
-                        <Linkedin size={24} />
-                    </a>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-700 transition-colors" aria-label="GitHub profile">
-                        <Github size={24} />
-                    </a>
-                </div>
-            </div>
-        </header>
-    );
-
-    const AboutMeSection = () => (
-        <section id="summary" className="bg-[#141414] rounded-lg shadow-xl p-8 fade-in">
-            <h2 className="text-2xl font-bold border-l-4 border-red-600 pl-4 mb-8">About Me</h2>
-            <p className="leading-relaxed text-gray-400">{portfolioData.professionalSummary}</p>
-            <div className="mt-8 flex justify-center">
-                <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="px-8 py-3 bg-red-600 text-white font-semibold rounded-full shadow-lg hover:bg-red-500 transition-colors">
-                    Generate an Email Draft
-                </button>
-            </div>
-        </section>
-    );
-
-    const SkillsSection = () => (
-        <section id="skills" className="bg-[#141414] rounded-lg shadow-xl p-8 fade-in">
-            <h2 className="text-2xl font-bold border-l-4 border-red-600 pl-4 mb-8">Skills</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {Object.entries(portfolioData.skills).map(([category, skills], index) => (
-                    <div key={index} className="bg-gray-900 p-6 rounded-lg shadow-inner shadow-gray-700 hover:shadow-xl transition-shadow">
-                        <h3 className="text-lg font-semibold text-red-500 mb-2">{category}</h3>
-                        <div className="flex flex-wrap gap-2">
-                            {skills.map((skill, skillIndex) => (
-                                <span key={skillIndex} className="bg-gray-800 text-gray-400 text-xs font-medium px-3 py-1 rounded-full border border-gray-700">
-                                    {skill}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </section>
-    );
-
-    const ExperienceSection = () => (
-        <section id="experience" className="bg-[#141414] rounded-lg shadow-xl p-8 fade-in">
-            <h2 className="text-2xl font-bold border-l-4 border-red-600 pl-4 mb-8">Experience</h2>
-            <div className="space-y-8">
-                {portfolioData.experience.map((exp, index) => (
-                    <div key={index} className="bg-gray-900 p-6 rounded-lg shadow-inner shadow-gray-700 hover:shadow-xl transition-shadow cursor-pointer">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between">
-                            <h3 className="text-xl font-semibold text-gray-200">{exp.title}</h3>
-                            <span className="text-sm text-gray-500 mt-1 sm:mt-0">{exp.date}</span>
-                        </div>
-                        <p className="mt-4 leading-relaxed text-gray-400">{exp.summary}</p>
-                        {exp.projects.length > 0 && (
-                            <ul className="mt-2 text-gray-500 list-disc list-inside">
-                                <strong>Projects:</strong>
-                                {exp.projects.map((proj, projIndex) => (
-                                    <li key={projIndex} className="ml-4">{proj}</li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                ))}
-            </div>
-        </section>
-    );
-
-    const ProjectsSection = () => (
-        <section id="projects" className="bg-[#141414] rounded-lg shadow-xl p-8 fade-in">
-            <h2 className="text-2xl font-bold border-l-4 border-red-600 pl-4 mb-8">Projects</h2>
-            <div className="space-y-8">
-                {portfolioData.projects.map((proj, index) => (
-                    <div key={index} className="bg-gray-900 p-6 rounded-lg shadow-inner shadow-gray-700 hover:shadow-xl transition-shadow">
-                        <div className="flex justify-between items-start">
-                            <h3 className="text-xl font-semibold text-gray-200">{proj.name}</h3>
-                            {proj.appStore && (
-                                <a href={proj.appStore} target="_blank" rel="noopener noreferrer" className="text-red-500 hover:underline flex items-center gap-1">
-                                    <Apple size={24} />
-                                    App Store
-                                </a>
-                            )}
-                        </div>
-                        <p className="mt-4 leading-relaxed text-gray-400">{proj.description}</p>
-                    </div>
-                ))}
-            </div>
-        </section>
-    );
-
-    const ContactSection = () => (
-        <section id="contact" className="bg-[#141414] rounded-lg shadow-xl p-8 fade-in text-center">
-            <h2 className="text-2xl font-bold border-l-4 border-red-600 pl-4 mb-8 inline-block">Contact & Collaboration</h2>
-            <p className="text-lg text-gray-400 mt-4 mb-6">
-                Interested in a collaboration or have a project in mind? Let's connect and build something amazing together.
-            </p>
-            <div className="flex justify-center space-x-4">
-                <a href="mailto:anarayanasamy12@gmail.com" className="px-8 py-3 bg-red-600 text-white font-semibold rounded-full shadow-lg hover:bg-red-500 transition-colors flex items-center gap-2">
-                    <Mail size={24} /> Email Me
-                </a>
-            </div>
-        </section>
-    );
-
-    const EmailModal = () => (
-        <div id="email-modal"
-            className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ${isModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-            <div className="absolute inset-0 bg-black/85 backdrop-blur-lg"></div>
-            <div ref={emailModalRef} className="relative bg-gray-900 p-8 rounded-xl shadow-2xl w-full max-w-lg mx-4 text-gray-300">
-                <button onClick={() => setIsModalOpen(false)} className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-                <h3 className="text-2xl font-bold text-red-500 mb-4">Generate Personalized Email Draft</h3>
-                <p className="text-gray-400 mb-6">Enter a job title or role, and I'll generate an email draft highlighting your fit for the position based on your portfolio data.</p>
-                <input
-                    type="text"
-                    id="job-role-input"
-                    value={jobRole}
-                    onChange={(e) => setJobRole(e.target.value)}
-                    placeholder="e.g., Senior iOS Developer, Mobile Engineer"
-                    className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 text-white mb-4 focus:outline-none focus:ring-2 focus:ring-red-600 transition-shadow"
-                />
-                <button
-                    onClick={generateEmailDraft}
-                    disabled={isLoading}
-                    className="w-full px-4 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    {isLoading ? 'Generating...' : 'Generate Draft'}
-                </button>
-
-                <div id="loading-spinner" className={`mt-6 flex justify-center ${isLoading ? '' : 'hidden'}`}>
-                    <div className="spinner h-5 w-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                    <span className="ml-2 text-white">Generating...</span>
-                </div>
-
-                {emailDraft && (
-                    <div id="email-output" className="mt-6 p-4 bg-gray-800 rounded-lg border border-gray-700 whitespace-pre-wrap text-gray-300">
-                        <h4 className="font-semibold text-red-400 mb-2">Your Draft:</h4>
-                        <pre className="text-sm whitespace-pre-wrap">{emailDraft}</pre>
-                    </div>
-                )}
-            </div>
-        </div>
-    );
-
     // --- Main JSX Structure ---
     return (
         <div className="bg-black text-gray-200 min-h-screen">
             <div className="container mx-auto p-4 md:p-8 max-w-5xl space-y-12">
-                <HeroSection />
+                <Suspense fallback={<div className="text-center py-16">Loading...</div>}>
+                    <HeroSection />
+                </Suspense>
                 <div className="space-y-12">
-                    <AboutMeSection />
-                    <SkillsSection />
-                    <ExperienceSection />
-                    <ProjectsSection />
-                    <ContactSection />
+                    <Suspense fallback={<div className="text-center">Loading about...</div>}>
+                        <AboutMeSection summary={portfolioData.professionalSummary} onOpenModal={() => setIsModalOpen(true)} />
+                    </Suspense>
+                    <Suspense fallback={<div className="text-center">Loading skills...</div>}>
+                        <SkillsSection skillsByCategory={portfolioData.skills} />
+                    </Suspense>
+                    <Suspense fallback={<div className="text-center">Loading experience...</div>}>
+                        <ExperienceSection experience={portfolioData.experience} />
+                    </Suspense>
+                    <Suspense fallback={<div className="text-center">Loading projects...</div>}>
+                        <ProjectsSection projects={portfolioData.projects} />
+                    </Suspense>
+                    <Suspense fallback={<div className="text-center">Loading contact...</div>}>
+                        <ContactSection />
+                    </Suspense>
                 </div>
             </div>
 
@@ -337,7 +196,18 @@ export default function App() {
             </button>
 
             {/* Render the modal outside of the main content flow */}
-            <EmailModal />
+            <Suspense fallback={null}>
+                <EmailModal
+                    isOpen={isModalOpen}
+                    isLoading={isLoading}
+                    emailDraft={emailDraft}
+                    jobRole={jobRole}
+                    setJobRole={setJobRole}
+                    onGenerate={generateEmailDraft}
+                    onClose={() => setIsModalOpen(false)}
+                    modalRef={emailModalRef}
+                />
+            </Suspense>
         </div>
     );
 };
